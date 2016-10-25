@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Comments </title>
+        <meta charset='utf-8'>
+    </head>
+    <body>
+        <h2>{{ r.name }}的評價</h2>
+        {% if r.comment_set.all %}
+            <p>目前共有{{ r.comment_set.all|length }}條評價</p>
+            <table>
+                <tr>
+                    <th>留言者</th>
+                    <th>時間</th>
+                    <th>評價</th>
+                </tr>
+            {% for c in r.comment_set.all %}
+                <tr>
+                    <td> {{ c.user }} </td>
+                    <td> {{ c.date_time | date:"F j, Y" }} </td>
+                    <td> {{ c.content }} </td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% else %}
+            <p>無評價</p>
+        {% endif %}
+
+        <br /><br />
+
+        <form action="" method="post">
+            <table>
+                <tr>
+                    <th> <label for="id_user">留言者:</label> </th>
+                    <td> {{ f.user  }} </td>
+                    <td> {{ f.user.errors }} </td>
+                </tr>
+                <tr>
+                    <th> <label for="id_email">電子信箱:</label> </th>
+                    <td> {{ f.email }} </td>
+                    <td> {{ f.email.errors }} </td>
+                </tr>
+                <tr>
+                    <th> <label for="id_content">評價:</label> </th>
+                    <td> {{ f.content }} </td>
+                    <td> {{ f.content.errors }} </td>
+                </tr>
+            </table>
+            <input type="hidden" name="ok" value="yes">
+            <input type="submit" value="給予評價">
+        </form>
+    </body>
+</html>
